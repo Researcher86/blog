@@ -1,0 +1,5 @@
+$ composer migrate
+  [Symfony\Component\Process\Exception\RuntimeException]
+  A temporary file could not be opened to write the process output: fopen(C:\Users\Tanat\AppData\Local\Temp\sf_proc_00.out.lock): failed to open stream: Permission denied
+
+Нежно вырубить сервер
