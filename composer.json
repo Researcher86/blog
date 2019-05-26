@@ -40,7 +40,7 @@
         }
     },
     "scripts": {
-        "serve": "php -S 0.0.0.0:81 -t public",
+        "server": "php -S 0.0.0.0:81 -t public",
         "test": "phpunit --colors=always",
         "orm-db-create": "doctrine orm:schema-tool:create",
         "orm-db-drop": "doctrine orm:schema-tool:drop --force",
