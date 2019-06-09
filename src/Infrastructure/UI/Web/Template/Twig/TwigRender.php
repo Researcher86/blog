@@ -10,7 +10,7 @@ use Twig\Extension\DebugExtension;
 use Twig\Loader\ArrayLoader;
 use Twig\Loader\FilesystemLoader;
 
-class TwigRenderInterface implements TemplateRenderInterface
+class TwigRender implements TemplateRenderInterface
 {
     /**
      * @var Environment

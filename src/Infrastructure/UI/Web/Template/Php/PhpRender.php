@@ -6,7 +6,7 @@ namespace Blog\Infrastructure\UI\Web\Template\Php;
 
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
 
-class PhpTemplateRenderer implements TemplateRenderInterface
+class PhpRender implements TemplateRenderInterface
 {
     /**
      * @var string

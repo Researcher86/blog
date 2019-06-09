@@ -15,7 +15,7 @@ use Blog\Infrastructure\UI\Web\Middleware\ErrorMiddleware;
 use Blog\Infrastructure\UI\Web\Middleware\ProfileMiddleware;
 use Blog\Infrastructure\UI\Web\Middleware\TemplateRendererMiddleware;
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
-use Blog\Infrastructure\UI\Web\Template\Twig\TwigRenderInterface;
+use Blog\Infrastructure\UI\Web\Template\Twig\TwigRender;
 use Blog\Infrastructure\UI\Web\WebApplication;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -113,7 +113,7 @@ return [
 
             EmitterInterface::class => SapiEmitter::class,
             MiddlewarePipeInterface::class => MiddlewarePipe::class,
-            TemplateRenderInterface::class => TwigRenderInterface::class,
+            TemplateRenderInterface::class => TwigRender::class,
             LoaderInterface::class => FilesystemLoader::class,
         ],
     ],
