@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Blog\Infrastructure\UI\Web\Handler;
-
 
 use Blog\Application\Service\ApplicationService;
 use Blog\Infrastructure\UI\Web\Template\ViewResponse;
@@ -29,7 +27,7 @@ class GetAllUsersHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $users = $this->service->execute(null);
+        $users = $this->service->execute($request);
 
         return new ViewResponse('users', ['users' => $users]);
     }

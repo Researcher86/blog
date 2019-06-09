@@ -1,5 +1,7 @@
 <?php
 
+use Blog\Infrastructure\Application\ApplicationAspectKernel;
+use Blog\Infrastructure\Application\Service\MonitorAspect;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
@@ -11,10 +13,38 @@ return [
         'factories' => [
             Logger::class => function (ContainerInterface $container, $requestedName) {
                 return new Logger('blog', [
-                    new StreamHandler('storage/app.log', Logger::WARNING),
+                    new StreamHandler('storage/app.log', $container->get('config')['debug'] ? Logger::DEBUG : Logger::WARNING),
 //                    new NativeMailerHandler('', '', '', Logger::ERROR)
                 ]);
             },
+
+            ApplicationAspectKernel::class => function (ContainerInterface $container, $requestedName) {
+                // Initialize an application aspect container
+                $applicationAspectKernel = ApplicationAspectKernel::getInstance();
+                $applicationAspectKernel->setDiContainer($container);
+                $applicationAspectKernel->init([
+                    'debug'        => true, // use 'false' for production mode
+                    'appDir'       => 'src/', // Application root directory
+                    'cacheDir'     => 'storage/cache/aop', // Cache directory
+                    // Include paths restricts the directories where aspects should be applied, or empty for all source files
+                    'includePaths' => [
+                        'src/'
+                    ]
+                ]);
+
+
+                return $applicationAspectKernel;
+            },
+
+            'aspects' => function (ContainerInterface $container, $requestedName) {
+                return [
+                    $container->get(MonitorAspect::class),
+                ];
+            },
+
+            'init' => function (ContainerInterface $container, $requestedName) {
+                $container->get(ApplicationAspectKernel::class);
+            }
         ],
 
         'aliases' => [

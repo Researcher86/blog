@@ -16,4 +16,6 @@ return [
             ApplicationService::class => GetAllUsersService::class,
         ],
     ],
+
+    'debug' => true
 ];
