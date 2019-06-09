@@ -122,7 +122,7 @@ return [
         'views' => [
             'src/Infrastructure/UI/Web/Template/Twig/Views'
         ],
-        'debug' => false,
+        'debug' => true,
         'cache' => 'storage/cache/twig',
     ]
 ];
