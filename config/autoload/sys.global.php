@@ -2,6 +2,7 @@
 
 use Blog\Infrastructure\Application\ApplicationAspectKernel;
 use Blog\Infrastructure\Application\Service\MonitorAspect;
+use Blog\Infrastructure\Application\Service\DoctrineTransactionalAspect;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
@@ -39,6 +40,7 @@ return [
             'aspects' => function (ContainerInterface $container, $requestedName) {
                 return [
                     $container->get(MonitorAspect::class),
+                    $container->get(DoctrineTransactionalAspect::class),
                 ];
             },
 
