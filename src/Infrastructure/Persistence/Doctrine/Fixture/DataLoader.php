@@ -2,13 +2,15 @@
 
 namespace Blog\Infrastructure\Persistence\Doctrine\Fixture;
 
+use Blog\Domain\Model\Post\Post;
+use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\User\User;
 use Blog\Domain\Model\User\UserId;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-class UserDataLoader extends AbstractFixture
+class DataLoader extends AbstractFixture
 {
     /**
      * @param ObjectManager $manager
@@ -19,7 +21,12 @@ class UserDataLoader extends AbstractFixture
         $faker = Factory::create();
 
         for ($i = 0; $i < 100; $i++) {
-            $manager->persist(new User(new UserId(), $faker->name, random_int(18, 100)));
+            $userId = new UserId();
+            $manager->persist(new User($userId, $faker->name, random_int(18, 100)));
+
+            for ($j = 0; $j < 10; $j++) {
+                $manager->persist(new Post(new PostId(), $faker->name, $userId));
+            }
         }
 
 

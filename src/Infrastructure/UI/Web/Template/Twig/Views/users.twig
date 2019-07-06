@@ -10,6 +10,7 @@
             <tr>
                 <td>{{ user.name }}</td>
                 <td>{{ user.age }}</td>
+                <td><a href="/{{ user.id }}/posts">Show Posts</a></td>
             </tr>
         {% endfor %}
     </table>

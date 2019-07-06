@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     /**
-     * @ORM\Embedded(class="Blog\Domain\Model\User\UserId", columnPrefix=false)
+     * @ORM\Embedded(class="UserId", columnPrefix=false)
      */
     private $id;
 
