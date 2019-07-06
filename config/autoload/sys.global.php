@@ -29,7 +29,7 @@ return [
                     'cacheDir'     => 'storage/cache/aop', // Cache directory
                     // Include paths restricts the directories where aspects should be applied, or empty for all source files
                     'includePaths' => [
-                        'src/'
+                        'src/Application'
                     ]
                 ]);
 
