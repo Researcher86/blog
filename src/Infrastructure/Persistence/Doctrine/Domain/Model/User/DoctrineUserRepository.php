@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Blog\Infrastructure\Persistence\Doctrine\Domain\Model\User;
-
 
 use Blog\Domain\Model\User\User;
 use Blog\Domain\Model\User\UserId;
 use Blog\Domain\Model\User\UserRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DoctrineUserRepository implements UserRepository
@@ -15,7 +14,10 @@ class DoctrineUserRepository implements UserRepository
      * @var EntityManagerInterface
      */
     private $em;
-
+    /**
+     * @var ObjectRepository
+     */
+    private $repository;
 
     /**
      * DoctrineUserRepository constructor.
@@ -24,11 +26,12 @@ class DoctrineUserRepository implements UserRepository
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
+        $this->repository = $this->em->getRepository(User::class);
     }
 
     public function getAll(): array
     {
-        return $this->em->getRepository(User::class)->findAll();
+        return $this->repository->findAll();
     }
 
     /**
@@ -37,5 +40,14 @@ class DoctrineUserRepository implements UserRepository
     public function nextIdentity(): UserId
     {
         return new UserId();
+    }
+
+    /**
+     * @param UserId $userId
+     * @return User|null
+     */
+    public function findById(UserId $userId): ?User
+    {
+        return $this->repository->findOneBy(['id.id' => $userId]);
     }
 }

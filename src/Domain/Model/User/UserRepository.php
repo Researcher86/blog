@@ -15,4 +15,10 @@ interface UserRepository
      * @return UserId
      */
     public function nextIdentity(): UserId;
+
+    /**
+     * @param UserId $userId
+     * @return User
+     */
+    public function findById(UserId $userId): ?User;
 }
