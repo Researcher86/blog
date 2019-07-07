@@ -6,7 +6,10 @@ namespace Blog\Domain\Model\User;
 
 interface UserRepository
 {
-    public function getAll();
+    /**
+     * @return User[]
+     */
+    public function getAll(): array;
 
     /**
      * @return UserId

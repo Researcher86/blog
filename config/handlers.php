@@ -2,7 +2,7 @@
 
 use Aura\Router\Map;
 use Blog\Infrastructure\UI\Web\Handler\AboutHandler;
-use Blog\Infrastructure\UI\Web\Handler\GetAllUsersHandler;
+use Blog\Infrastructure\UI\Web\Handler\User\GetAllUsersHandler;
 use Blog\Infrastructure\UI\Web\Handler\IndexHandler;
 use Blog\Infrastructure\UI\Web\Handler\Post\GetPosts;
 use Blog\Infrastructure\UI\Web\Handler\Post\GetPostsByUser;

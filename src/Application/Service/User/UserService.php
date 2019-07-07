@@ -2,6 +2,7 @@
 
 namespace Blog\Application\Service\User;
 
+use Blog\Domain\Model\User\User;
 use Blog\Domain\Model\User\UserRepository;
 use Blog\Infrastructure\Application\Transactional;
 
@@ -24,10 +25,9 @@ class UserService
 
     /**
      * @Transactional
-     * @param $request
-     * @return mixed
+     * @return User[]
      */
-    public function getAll($request)
+    public function getAllUsers(): array
     {
 //        throw new \DomainException();
         return $this->userRepository->getAll();
