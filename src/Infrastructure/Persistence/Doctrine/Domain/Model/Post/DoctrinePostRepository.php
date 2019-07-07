@@ -8,6 +8,7 @@ use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\Post\PostRepository;
 use Blog\Domain\Model\User\UserId;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class DoctrinePostRepository implements PostRepository
@@ -16,6 +17,10 @@ class DoctrinePostRepository implements PostRepository
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var ObjectRepository
+     */
+    private $repository;
 
 
     /**
@@ -25,12 +30,13 @@ class DoctrinePostRepository implements PostRepository
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
+        $this->repository = $this->em->getRepository(Post::class);
     }
 
 
     public function getAll()
     {
-        return $this->em->getRepository(Post::class)->findAll();
+        return $this->repository->findAll();
     }
 
     /**
@@ -47,6 +53,6 @@ class DoctrinePostRepository implements PostRepository
      */
     public function findByUser(UserId $userId): array
     {
-        return $this->em->getRepository(Post::class)->findBy(['userId.id' => $userId]);
+        return $this->repository->findBy(['userId.id' => $userId]);
     }
 }
