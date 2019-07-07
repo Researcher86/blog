@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Blog\Infrastructure\UI\Web\Handler\Post;
-
 
 use Blog\Application\Service\Post\PostService;
 use Blog\Infrastructure\UI\Web\Template\ViewResponse;

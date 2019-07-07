@@ -21,7 +21,11 @@ class DataLoader extends AbstractFixture
         $faker = Factory::create();
 
         for ($i = 0; $i < 100; $i++) {
-            $userId = new UserId();
+            if ($i == 0) {
+                $userId = new UserId('11111111-1111-1111-1111-111111111111');
+            } else {
+                $userId = new UserId();
+            }
             $manager->persist(new User($userId, $faker->name, random_int(18, 100)));
 
             for ($j = 0; $j < 10; $j++) {
