@@ -44,10 +44,12 @@ class DoctrineUserRepository implements UserRepository
 
     /**
      * @param UserId $userId
-     * @return User|null
+     * @return null|User
      */
     public function findById(UserId $userId): ?User
     {
-        return $this->repository->findOneBy(['id.id' => $userId]);
+        /** @var User $user */
+        $user = $this->repository->findOneBy(['id.id' => $userId]);
+        return $user;
     }
 }
