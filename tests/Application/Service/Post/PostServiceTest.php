@@ -1,7 +1,8 @@
 <?php
 
-namespace Blog\Application\Service\Post;
+namespace Tests\Application\Service\Post;
 
+use Blog\Application\Service\Post\PostService;
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\Post\PostRepository;
@@ -9,6 +10,10 @@ use Blog\Domain\Model\User\UserId;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class PostServiceTest
+ * @package Blog\Application\Service\Post
+ */
 class PostServiceTest extends TestCase
 {
     /**

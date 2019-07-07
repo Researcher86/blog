@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\App\Domain;
+namespace Tests\Domain;
 
 
 use Blog\Domain\DomainEventPublisher;
