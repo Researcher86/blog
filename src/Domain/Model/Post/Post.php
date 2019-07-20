@@ -19,6 +19,7 @@ class Post
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      */
     private $name;
@@ -32,10 +33,10 @@ class Post
     /**
      * Post constructor.
      * @param PostId $id
-     * @param $name
+     * @param string $name
      * @param UserId $userId
      */
-    public function __construct(PostId $id, $name, UserId $userId)
+    public function __construct(PostId $id, string $name, UserId $userId)
     {
         $this->id = $id;
         $this->name = $name;
@@ -51,9 +52,9 @@ class Post
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
