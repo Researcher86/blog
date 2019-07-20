@@ -46,6 +46,7 @@
     "scripts": {
         "server": "php -S 0.0.0.0:81 -t public",
         "test": "phpunit --colors=always",
+        "coverage": "phpunit --coverage-text",
         "orm-db-create": "doctrine orm:schema-tool:create",
         "orm-db-drop": "doctrine orm:schema-tool:drop --force",
         "orm-db-update": "doctrine orm:schema-tool:update --force",
