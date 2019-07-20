@@ -20,10 +20,10 @@ final class Version20190706015014 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         $table = $schema->createTable('blog_posts');
-        $table->addColumn('id', 'string')->setLength(36);
+        $table->addColumn('id', 'guid');
         $table->addColumn('name', 'string');
-        $table->addColumn('user_id', 'string');
-        $table->setPrimaryKey(['id']);
+        $table->addColumn('user_id', 'guid');
+        $table->setPrimaryKey(['id', 'user_id']);
     }
 
     public function down(Schema $schema) : void
