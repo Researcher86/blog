@@ -55,4 +55,13 @@ class DoctrinePostRepository implements PostRepository
     {
         return $this->repository->findBy(['userId.id' => $userId]);
     }
+
+    /**
+     * @param PostId $postId
+     * @return Post
+     */
+    public function findById(PostId $postId): Post
+    {
+        return $this->repository->find($postId);
+    }
 }

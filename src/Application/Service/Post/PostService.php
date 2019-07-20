@@ -5,8 +5,10 @@ namespace Blog\Application\Service\Post;
 
 
 use Blog\Domain\Model\Post\Post;
+use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\Post\PostRepository;
 use Blog\Domain\Model\User\UserId;
+use Blog\Infrastructure\Application\Transactional;
 
 class PostService
 {
@@ -40,4 +42,17 @@ class PostService
     {
         return $this->postRepository->getAll();
     }
+
+    /**
+     * @Transactional()
+     * @param string $text
+     * @param string $userId
+     * @param string $postId
+     */
+    public function addComment(string $text, string $userId, string $postId)
+    {
+        $post = $this->postRepository->findById(new PostId($postId));
+        $post->addComment($text, new UserId($userId));
+    }
+
 }

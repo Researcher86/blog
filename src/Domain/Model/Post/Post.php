@@ -31,6 +31,12 @@ class Post
     private $userId;
 
     /**
+     * @var Comment[]
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="Post", cascade={"remove", "persist"})
+     */
+    private $comments;
+
+    /**
      * Post constructor.
      * @param PostId $id
      * @param string $name
@@ -65,5 +71,22 @@ class Post
     public function getUserId(): UserId
     {
         return $this->userId;
+    }
+
+    /**
+     * @return Comment[]
+     */
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param string $text
+     * @param UserId $userId
+     */
+    public function addComment(string $text, UserId $userId)
+    {
+        $this->comments[] = new Comment(new CommentId(), $text, $userId, $this);
     }
 }

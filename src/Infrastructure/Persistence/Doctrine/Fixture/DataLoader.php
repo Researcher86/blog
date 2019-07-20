@@ -2,6 +2,8 @@
 
 namespace Blog\Infrastructure\Persistence\Doctrine\Fixture;
 
+use Blog\Domain\Model\Post\Comment;
+use Blog\Domain\Model\Post\CommentId;
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\User\User;
@@ -29,7 +31,11 @@ class DataLoader extends AbstractFixture
             $manager->persist(new User($userId, $faker->name, random_int(18, 100)));
 
             for ($j = 0; $j < 10; $j++) {
-                $manager->persist(new Post(new PostId(), $faker->name, $userId));
+                $post = new Post(new PostId(), $faker->name, $userId);
+                $post->addComment($faker->text, $userId);
+                $post->addComment($faker->text, $userId);
+                $post->addComment($faker->text, $userId);
+                $manager->persist($post);
             }
         }
 

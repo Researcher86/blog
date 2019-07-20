@@ -23,4 +23,10 @@ interface PostRepository
      * @return Post[]
      */
     public function findByUser(UserId $userId): array;
+
+    /**
+     * @param PostId $param
+     * @return Post
+     */
+    public function findById(PostId $param): Post;
 }

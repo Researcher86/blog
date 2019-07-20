@@ -47,15 +47,26 @@ class PostServiceTest extends TestCase
 
     public function testFindPostsByUser()
     {
-        $this->postRepository->method('getAll')->willReturn($this->posts);
-        $posts = $this->postService->getAllPosts();
-        self::assertEquals($this->posts, $posts);
+        $this->postRepository->method('findByUser')->willReturn([$this->posts[0]]);
+        $posts = $this->postService->findPostsByUser('7afcd67d-790d-48c4-9922-0a085f5d27ac');
+
+        self::assertEquals($this->posts[0], $posts[0]);
     }
 
     public function testGetAllPosts()
     {
-        $this->postRepository->method('findByUser')->willReturn([$this->posts[0]]);
-        $posts = $this->postService->findPostsByUser('7afcd67d-790d-48c4-9922-0a085f5d27ac');
-        self::assertEquals($this->posts[0], $posts[0]);
+        $this->postRepository->method('getAll')->willReturn($this->posts);
+        $posts = $this->postService->getAllPosts();
+
+        self::assertEquals($this->posts, $posts);
     }
+
+    public function testAddComment()
+    {
+        $this->postRepository->method('findById')->willReturn($this->posts[0]);
+        $this->postService->addComment("Comment text", $this->posts[0]->getUserId()->id(), $this->posts[0]->getId()->id());
+
+        self::assertNotEmpty($this->posts[0]->getComments());
+    }
+
 }
