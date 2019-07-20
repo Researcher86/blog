@@ -20,13 +20,18 @@ return [
             },
 
             ApplicationAspectKernel::class => function (ContainerInterface $container, $requestedName) {
+                $cacheDir = 'storage/cache/aop';
+
+                if (!file_exists($cacheDir)) {
+                    mkdir($cacheDir, 0777, true);
+                }
                 // Initialize an application aspect container
                 $applicationAspectKernel = ApplicationAspectKernel::getInstance();
                 $applicationAspectKernel->setDiContainer($container);
                 $applicationAspectKernel->init([
                     'debug'        => true, // use 'false' for production mode
                     'appDir'       => 'src/', // Application root directory
-                    'cacheDir'     => 'storage/cache/aop', // Cache directory
+                    'cacheDir'     => $cacheDir, // Cache directory
                     // Include paths restricts the directories where aspects should be applied, or empty for all source files
                     'includePaths' => [
                         'src/Application'
