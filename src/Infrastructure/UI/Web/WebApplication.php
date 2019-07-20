@@ -7,13 +7,12 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
-use Zend\Stratigility\MiddlewarePipe;
 use Zend\Stratigility\MiddlewarePipeInterface;
 
 class WebApplication
 {
     /**
-     * @var MiddlewarePipe
+     * @var MiddlewarePipeInterface
      */
     private $middlewarePipe;
     /**
@@ -42,12 +41,13 @@ class WebApplication
      * @param EmitterInterface $emitter
      * @param ContainerInterface $container
      */
-    public function __construct(MiddlewarePipeInterface $middlewarePipe,
-                                Matcher $matcher,
-                                RequestHandlerInterface $defaultHandler,
-                                EmitterInterface $emitter,
-                                ContainerInterface $container)
-    {
+    public function __construct(
+        MiddlewarePipeInterface $middlewarePipe,
+        Matcher $matcher,
+        RequestHandlerInterface $defaultHandler,
+        EmitterInterface $emitter,
+        ContainerInterface $container
+    ) {
         $this->middlewarePipe = $middlewarePipe;
         $this->matcher = $matcher;
         $this->defaultHandler = $defaultHandler;

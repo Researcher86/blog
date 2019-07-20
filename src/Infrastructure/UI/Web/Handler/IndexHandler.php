@@ -9,7 +9,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class IndexHandler implements RequestHandlerInterface
 {
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $name = $request->getQueryParams()['name'] ?? 'Guest';

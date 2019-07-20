@@ -3,7 +3,6 @@
 
 namespace Blog\Domain\Model\User;
 
-
 interface UserRepository
 {
     /**

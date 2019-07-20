@@ -3,7 +3,6 @@
 
 namespace Blog\Domain\Model\User;
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,5 +62,4 @@ class User
     {
         return $this->age;
     }
-
 }

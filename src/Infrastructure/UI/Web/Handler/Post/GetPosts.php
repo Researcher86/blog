@@ -3,7 +3,6 @@
 
 namespace Blog\Infrastructure\UI\Web\Handler\Post;
 
-
 use Blog\Application\Service\Post\PostService;
 use Blog\Infrastructure\UI\Web\Template\ViewResponse;
 use Psr\Http\Message\ResponseInterface;

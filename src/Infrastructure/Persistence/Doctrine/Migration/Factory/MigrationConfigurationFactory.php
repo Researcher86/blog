@@ -43,10 +43,8 @@ class MigrationConfigurationFactory
             } else {
                 $configuration->{self::CONFIGURATION_METHOD_MAP[$key]}($config[$key]);
             }
-
         }
 
         return $configuration;
     }
-
 }

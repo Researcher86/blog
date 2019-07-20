@@ -3,7 +3,6 @@
 
 namespace Blog\Domain\Model\User;
 
-
 use Blog\Domain\Model\Identity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,5 +11,4 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UserId extends Identity
 {
-
 }

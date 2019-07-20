@@ -3,16 +3,13 @@
 
 namespace Blog\Infrastructure\UI\Web\Middleware;
 
-
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
-use Blog\Infrastructure\UI\Web\Template\ViewResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\TextResponse;
 
 class ErrorMiddleware implements MiddlewareInterface
 {
@@ -49,6 +46,5 @@ class ErrorMiddleware implements MiddlewareInterface
                 return new HtmlResponse('<h1>500 - Server Error</h1>', 500);
             }
         }
-
     }
 }

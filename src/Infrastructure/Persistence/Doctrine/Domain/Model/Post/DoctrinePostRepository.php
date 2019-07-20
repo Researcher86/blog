@@ -3,7 +3,6 @@
 
 namespace Blog\Infrastructure\Persistence\Doctrine\Domain\Model\Post;
 
-
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\Post\PostRepository;
@@ -36,32 +35,27 @@ class DoctrinePostRepository implements PostRepository
 
     public function getAll()
     {
-        return $this->repository->findAll();
+        /** @var Post[] $posts */
+        $posts = $this->repository->findAll();
+        return $posts;
     }
 
-    /**
-     * @return PostId
-     */
     public function nextIdentity(): PostId
     {
         return new PostId();
     }
 
-    /**
-     * @param UserId $userId
-     * @return Post[]
-     */
     public function findByUser(UserId $userId): array
     {
-        return $this->repository->findBy(['userId.id' => $userId]);
+        /** @var Post[] $posts */
+        $posts = $this->repository->findBy(['userId.id' => $userId]);
+        return $posts;
     }
 
-    /**
-     * @param PostId $postId
-     * @return Post
-     */
-    public function findById(PostId $postId): Post
+    public function findById(PostId $postId): ?Post
     {
-        return $this->repository->find($postId);
+        /** @var Post $post */
+        $post = $this->repository->find($postId);
+        return $post;
     }
 }

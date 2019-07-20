@@ -3,7 +3,6 @@
 
 namespace Blog\Infrastructure\UI\Web\Middleware;
 
-
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
 use Blog\Infrastructure\UI\Web\Template\ViewResponse;
 use Psr\Http\Message\ResponseInterface;

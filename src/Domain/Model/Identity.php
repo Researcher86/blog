@@ -3,7 +3,6 @@
 
 namespace Blog\Domain\Model;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -47,5 +46,4 @@ abstract class Identity
     {
         return $this->id;
     }
-
 }

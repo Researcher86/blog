@@ -3,7 +3,6 @@
 
 namespace Blog\Domain\Model\Post;
 
-
 use Blog\Domain\Model\User\UserId;
 
 interface PostRepository
@@ -26,7 +25,7 @@ interface PostRepository
 
     /**
      * @param PostId $param
-     * @return Post
+     * @return null|Post
      */
-    public function findById(PostId $param): Post;
+    public function findById(PostId $param): ?Post;
 }

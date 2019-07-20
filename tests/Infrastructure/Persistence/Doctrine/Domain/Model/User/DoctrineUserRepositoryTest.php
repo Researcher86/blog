@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Infrastructure\Persistence\Doctrine\Domain\Model\Post;
+namespace Tests\Infrastructure\Persistence\Doctrine\Domain\Model\User;
 
 use Blog\Domain\Model\User\UserId;
 use Blog\Domain\Model\User\UserRepository;

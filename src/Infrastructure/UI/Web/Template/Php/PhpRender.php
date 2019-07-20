@@ -3,7 +3,6 @@
 
 namespace Blog\Infrastructure\UI\Web\Template\Php;
 
-
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
 
 class PhpRender implements TemplateRenderInterface
@@ -23,16 +22,17 @@ class PhpRender implements TemplateRenderInterface
         $this->path = $path;
     }
 
-    /**
-     * @param string $path
-     * @param array $data
-     * @return string
-     */
     public function render(string $path, array $data): string
     {
         ob_start();
         extract($data);
         include sprintf("%s/%s.php", $this->path, $path);
-        return ob_get_clean();
+        $result = ob_get_clean();
+
+        if (!$result) {
+            throw new \RuntimeException("Error render view.");
+        }
+
+        return $result;
     }
 }

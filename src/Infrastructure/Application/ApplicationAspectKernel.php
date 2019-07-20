@@ -34,6 +34,5 @@ class ApplicationAspectKernel extends AspectKernel
         foreach ($this->diContainer->get('aspects') as $aspect) {
             $container->registerAspect($aspect);
         }
-
     }
 }

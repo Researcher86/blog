@@ -62,7 +62,7 @@ return [
 
         'migrations' => [
             'name' => 'Blog Migrations',
-            'migrations_namespace' => 'Blog\Migrations',
+            'migrations_namespace' => 'Blog\Infrastructure\Persistence\Doctrine\Migration',
             'table_name' => 'doctrine_migration_versions',
             'column_name' => 'version',
             'column_length' => 14,

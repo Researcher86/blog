@@ -9,5 +9,4 @@ namespace Blog\Infrastructure\Application;
  */
 final class Transactional
 {
-
 }

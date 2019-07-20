@@ -36,11 +36,20 @@ class PostServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->posts = [
-            new Post(new PostId('7afcd67d-790d-48c4-9922-0a085f5d27ac'), 'Post', new UserId('7afcd67d-790d-48c4-9922-0a085f5d27ac')),
-            new Post(new PostId('7afcd67d-790d-48c4-9923-0a085f5d27ac'), 'Post', new UserId('7afcd67d-790d-48c4-9922-0a085f5d27ac')),
+            new Post(
+                new PostId('7afcd67d-790d-48c4-9922-0a085f5d27ac'),
+                'Post',
+                new UserId('7afcd67d-790d-48c4-9922-0a085f5d27ac')
+            ),
+            new Post(
+                new PostId('7afcd67d-790d-48c4-9923-0a085f5d27ac'),
+                'Post',
+                new UserId('7afcd67d-790d-48c4-9922-0a085f5d27ac')
+            ),
         ];
 
         $this->postRepository = $this->createMock(PostRepository::class);
+        assert($this->postRepository instanceof PostRepository);
         $this->postService = new PostService($this->postRepository);
     }
 
@@ -64,9 +73,12 @@ class PostServiceTest extends TestCase
     public function testAddComment()
     {
         $this->postRepository->method('findById')->willReturn($this->posts[0]);
-        $this->postService->addComment("Comment text", $this->posts[0]->getUserId()->id(), $this->posts[0]->getId()->id());
+        $this->postService->addComment(
+            "Comment text",
+            $this->posts[0]->getUserId()->id(),
+            $this->posts[0]->getId()->id()
+        );
 
         self::assertNotEmpty($this->posts[0]->getComments());
     }
-
 }

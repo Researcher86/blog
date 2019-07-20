@@ -31,7 +31,9 @@ class DoctrineUserRepository implements UserRepository
 
     public function getAll(): array
     {
-        return $this->repository->findAll();
+        /** @var User[] $users */
+        $users = $this->repository->findAll();
+        return $users;
     }
 
     /**

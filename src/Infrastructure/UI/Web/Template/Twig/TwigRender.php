@@ -3,7 +3,6 @@
 
 namespace Blog\Infrastructure\UI\Web\Template\Twig;
 
-
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -27,14 +26,6 @@ class TwigRender implements TemplateRenderInterface
         $this->environment = $environment;
     }
 
-    /**
-     * @param string $path
-     * @param array $data
-     * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
     public function render(string $path, array $data): string
     {
         if ($this->environment->isDebug()) {

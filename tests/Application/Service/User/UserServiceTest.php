@@ -40,6 +40,7 @@ class UserServiceTest extends TestCase
         ];
 
         $this->userRepository = $this->createMock(UserRepository::class);
+        assert($this->userRepository instanceof UserRepository);
         $this->userService = new UserService($this->userRepository);
     }
 

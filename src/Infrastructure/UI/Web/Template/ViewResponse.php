@@ -5,7 +5,6 @@ namespace Blog\Infrastructure\UI\Web\Template;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-
 class ViewResponse implements ResponseInterface
 {
     /**
