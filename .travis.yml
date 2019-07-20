@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - "7.2"
   - "7.3"
 
 install:
@@ -9,7 +8,4 @@ install:
 
 script:
   - composer check
-#  - ./vendor/bin/phpcs
-#  - ./vendor/bin/phpstan analyse
-#  - ./vendor/bin/phpunit --coverage-clover=coverage.clover
-#  - ./vendor/bin/infection -s --min-msi=100 --min-covered-msi=100
+  - composer test
