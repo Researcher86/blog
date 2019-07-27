@@ -1,5 +1,6 @@
 {
-    "name": "blog",
+    "name": "researcher2286/blog",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Tanat",
@@ -28,6 +29,7 @@
         "zendframework/zend-stratigility": "^3.1"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "nunomaduro/phpinsights": "^1.7",
         "phpstan/phpstan": "^0.11.8",
         "phpunit/phpunit": "^8.1",
