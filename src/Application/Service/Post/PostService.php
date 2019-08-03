@@ -5,7 +5,7 @@ namespace Blog\Application\Service\Post;
 
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
-use Blog\Domain\Model\Post\PostNotFountException;
+use Blog\Domain\Model\Post\PostNotFoundException;
 use Blog\Domain\Model\Post\PostRepository;
 use Blog\Domain\Model\User\UserId;
 use Blog\Infrastructure\Application\Transactional;
@@ -54,7 +54,7 @@ class PostService
         $post = $this->postRepository->findById(new PostId($postId));
 
         if (!$post) {
-            throw new PostNotFountException("Post not fount.");
+            throw new PostNotFoundException("Post not found.");
         }
 
         $post->addComment($text, new UserId($userId));

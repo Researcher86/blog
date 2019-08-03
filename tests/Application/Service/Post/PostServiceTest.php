@@ -5,6 +5,7 @@ namespace Tests\Application\Service\Post;
 use Blog\Application\Service\Post\PostService;
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
+use Blog\Domain\Model\Post\PostNotFoundException;
 use Blog\Domain\Model\Post\PostRepository;
 use Blog\Domain\Model\User\UserId;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -80,5 +81,17 @@ class PostServiceTest extends TestCase
         );
 
         self::assertNotEmpty($this->posts[0]->getComments());
+    }
+
+    public function testAddCommentPostNotFound()
+    {
+        $this->expectException(PostNotFoundException::class);
+        $this->expectExceptionMessage("Post not found.");
+        $this->postRepository->method('findById')->willReturn(null);
+        $this->postService->addComment(
+            "Comment text",
+            $this->posts[0]->getUserId()->id(),
+            $this->posts[0]->getId()->id()
+        );
     }
 }
