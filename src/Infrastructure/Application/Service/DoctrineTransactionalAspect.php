@@ -7,6 +7,7 @@ use Go\Aop\Aspect;
 use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Around;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 class DoctrineTransactionalAspect implements Aspect
 {
@@ -39,8 +40,18 @@ class DoctrineTransactionalAspect implements Aspect
      */
     public function aroundMethodExecution(MethodInvocation $invocation)
     {
-        return $this->entityManager->transactional(function () use ($invocation) {
-            return $invocation->proceed();
-        });
+        $this->entityManager->beginTransaction();
+
+        try {
+            $return = $invocation->proceed();
+            $this->entityManager->flush();
+            $this->entityManager->commit();
+
+            return $return;
+        } catch (Throwable $e) {
+            $this->entityManager->rollBack();
+
+            throw $e;
+        }
     }
 }
