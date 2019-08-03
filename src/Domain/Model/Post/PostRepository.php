@@ -10,7 +10,7 @@ interface PostRepository
     /**
      * @return Post[]
      */
-    public function getAll();
+    public function getAll(): array;
 
     /**
      * @return PostId

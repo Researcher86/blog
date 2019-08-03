@@ -33,7 +33,7 @@ class DoctrinePostRepository implements PostRepository
     }
 
 
-    public function getAll()
+    public function getAll(): array
     {
         /** @var Post[] $posts */
         $posts = $this->repository->findAll();

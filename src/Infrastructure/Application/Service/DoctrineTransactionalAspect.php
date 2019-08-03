@@ -32,8 +32,6 @@ class DoctrineTransactionalAspect implements Aspect
 
 
     /**
-     * Method that will be called before real method
-     *
      * @param MethodInvocation $invocation Invocation
      * @Around("@execution(Blog\Infrastructure\Application\Transactional)")
      * @return mixed
