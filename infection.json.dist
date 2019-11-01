@@ -1,0 +1,15 @@
+{
+  "source": {
+    "directories": [
+      "src"
+    ]
+  },
+  "timeout": 10,
+  "tmpDir": "./storage/cache",
+  "logs": {
+    "badge": {
+      "branch": "master"
+    }
+  },
+  "testFrameworkOptions": "-vvv"
+}

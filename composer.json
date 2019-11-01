@@ -29,10 +29,11 @@
         "zendframework/zend-stratigility": "^3.1"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master",
+        "infection/infection": "^0.13.4",
         "nunomaduro/phpinsights": "^1.7",
         "phpstan/phpstan": "^0.11.8",
         "phpunit/phpunit": "^8.1",
+        "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.4"
     },
     "autoload": {
@@ -47,13 +48,17 @@
     },
     "scripts": {
         "server": "php -S 0.0.0.0:81 -t public",
-        "test": "phpunit --colors=always",
+        "///": "Параметре нужет для composer --ansi, делает красивый вывод сообщений infection",
+        "test": [
+            "phpunit --colors=always --testdox",
+            "infection -s --threads=8 --min-msi=100 --min-covered-msi=100 --ansi"
+        ],
         "coverage": "phpunit --coverage-text",
-        "orm-db-create": "doctrine orm:schema-tool:create",
-        "orm-db-drop": "doctrine orm:schema-tool:drop --force",
-        "orm-db-update": "doctrine orm:schema-tool:update --force",
-        "orm-db-validate": "doctrine orm:validate-schema",
-        "orm-db-clear-metadata": "doctrine orm:clear-cache:metadata",
+        "orm-db-create": "doctrine orm:schema-tool:create --ansi",
+        "orm-db-drop": "doctrine orm:schema-tool:drop --force --ansi",
+        "orm-db-update": "doctrine orm:schema-tool:update --force --ansi",
+        "orm-db-validate": "doctrine orm:validate-schema --ansi",
+        "orm-db-clear-metadata": "doctrine orm:clear-cache:metadata --ansi",
         "orm-db-refresh": [
             "@orm-db-clear-metadata",
             "@orm-db-drop",
@@ -67,23 +72,23 @@
             "latest - Миграция до последней версии."
         ],
         "db-refresh": [
-            "doctrine-migrations migrate first --all-or-nothing --no-interaction",
-            "doctrine-migrations migrate latest --all-or-nothing --no-interaction",
+            "doctrine-migrations migrate first --all-or-nothing --no-interaction --ansi",
+            "doctrine-migrations migrate latest --all-or-nothing --no-interaction --ansi",
             "@load-fixture"
         ],
-        "migrate": "doctrine-migrations migrate --all-or-nothing --no-interaction --query-time",
-        "migrate-create": "doctrine-migrations generate",
-        "migrate-diff": "doctrine-migrations diff",
+        "migrate": "doctrine-migrations migrate --all-or-nothing --no-interaction --query-time --ansi",
+        "migrate-create": "doctrine-migrations generate --ansi",
+        "migrate-diff": "doctrine-migrations diff --ansi",
 
         "load-fixture": "php db/init.php",
-        "analyse": "phpinsights",
+        "phpinsights": "phpinsights --ansi",
         "php-cs-fixer": [
             "php-cs-fixer fix src/",
             "php-cs-fixer fix tests/"
         ],
         "check": [
             "phpcs",
-            "phpstan analyse"
+            "phpstan analyse --ansi"
         ]
     },
     "config": {
