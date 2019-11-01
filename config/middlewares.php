@@ -12,7 +12,11 @@ return function (MiddlewarePipe $pipe) use ($container) {
 
     $pipeHelper($pipe, '*', ProfileMiddleware::class);
     $pipeHelper($pipe, '*', AuthorMiddleware::class);
-    $pipeHelper($pipe, '*', ErrorMiddleware::class);
-    $pipeHelper($pipe, '/profile', BasicAuthMiddleware::class);
+
+    if (!$container->get('config')['debug']) {
+        $pipeHelper($pipe, '*', ErrorMiddleware::class);
+    }
+
+    $pipeHelper($pipe, '/admin', BasicAuthMiddleware::class);
     $pipeHelper($pipe, '*', TemplateRendererMiddleware::class);
 };
