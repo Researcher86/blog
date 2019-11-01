@@ -27,6 +27,6 @@ class GetPostsByUser implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->postService->findPostsByUser($request->getAttribute('userId'));
-        return new ViewResponse('posts', ['posts' => $posts]);
+        return new ViewResponse('posts/list', ['posts' => $posts]);
     }
 }

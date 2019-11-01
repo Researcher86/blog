@@ -29,6 +29,6 @@ class GetAllUsersHandler implements RequestHandlerInterface
     {
         $users = $this->service->getAllUsers();
 
-        return new ViewResponse('users', ['users' => $users]);
+        return new ViewResponse('users/list', ['users' => $users]);
     }
 }
