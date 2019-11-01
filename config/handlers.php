@@ -11,10 +11,11 @@ use Blog\Infrastructure\UI\Web\Handler\ShowHandler;
 
 return function (Map $map) {
     $map->get('home', '/', IndexHandler::class);
+    $map->get('show', '/show/{id}', ShowHandler::class)->tokens(['id' => '\d+']);
+
     $map->get('users', '/users', GetAllUsersHandler::class);
     $map->get('user-posts', '/{userId}/posts', GetPostsByUser::class)->tokens(['userId' => '.+']);
     $map->get('all-posts', '/posts', GetPosts::class);
     $map->get('about', '/about', AboutHandler::class);
     $map->get('profile', '/profile', ProfileHandler::class);
-    $map->get('show', '/show/{id}', ShowHandler::class)->tokens(['id' => '\d+']);
 };
