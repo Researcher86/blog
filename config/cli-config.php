@@ -16,5 +16,8 @@ $em = $container->get(EntityManagerInterface::class);
 return new HelperSet([
     'em' => new EntityManagerHelper($em),
     'db' => new ConnectionHelper($em->getConnection()),
-    'configuration' => new ConfigurationHelper($em->getConnection(), $container->get(Configuration::class))
+    'configuration' => new ConfigurationHelper(
+        $em->getConnection(),
+        $container->get(Configuration::class)
+    ),
 ]);

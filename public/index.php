@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 chdir(dirname(__DIR__));
 
 use Blog\Infrastructure\UI\Web\WebApplication;

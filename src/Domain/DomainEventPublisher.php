@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Domain;
 
-class DomainEventPublisher
+final class DomainEventPublisher
 {
     /**
      * @var DomainEventSubscriber[]
@@ -14,15 +16,18 @@ class DomainEventPublisher
      */
     private static $instance = null;
 
+    /**
+     * @var int
+     */
     private $id = 0;
 
-    public static function instance()
+    public static function instance(): self
     {
-        if (null === static::$instance) {
-            static::$instance = new self();
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     private function __construct()
@@ -35,26 +40,26 @@ class DomainEventPublisher
         throw new \BadMethodCallException('Clone is not supported');
     }
 
-    public function subscribe($aDomainEventSubscriber)
+    public function subscribe(DomainEventSubscriber $subscriber): int
     {
         $id = $this->id;
-        $this->subscribers[$id] = $aDomainEventSubscriber;
+        $this->subscribers[$id] = $subscriber;
         $this->id++;
 
         return $id;
     }
 
-    public function ofId($id)
+    public function ofId(int $id): ?DomainEventSubscriber
     {
-        return isset($this->subscribers[$id]) ? $this->subscribers[$id] : null;
+        return $this->subscribers[$id] ?? null;
     }
 
-    public function unsubscribe($id)
+    public function unsubscribe(int $id): void
     {
         unset($this->subscribers[$id]);
     }
 
-    public function publish(DomainEvent $aDomainEvent)
+    public function publish(DomainEvent $aDomainEvent): void
     {
         foreach ($this->subscribers as $aSubscriber) {
             if ($aSubscriber->isSubscribedTo($aDomainEvent)) {

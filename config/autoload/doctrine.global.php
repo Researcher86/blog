@@ -4,14 +4,20 @@ use ContainerInteropDoctrine\EntityManagerFactory;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\DBAL\Driver\PDOSqlite\Driver;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
+use Doctrine\Migrations\Configuration\Configuration;
+use Blog\Infrastructure\Persistence\Doctrine\Migration\Factory\MigrationConfigurationFactory;
+use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\Common\Cache\FilesystemCache;
 
 return [
     'dependencies' => [
         'factories'  => [
             EntityManagerInterface::class => EntityManagerFactory::class,
-            Doctrine\Migrations\Configuration\Configuration::class => Blog\Infrastructure\Persistence\Doctrine\Migration\Factory\MigrationConfigurationFactory::class,
+            Configuration::class => MigrationConfigurationFactory::class,
 
             'fixture-executor' => function (ContainerInterface $container, $requestedName) {
                 return function () use ($container) {
@@ -21,7 +27,7 @@ return [
 
                     $executor->execute($loader->getFixtures());
                 };
-            }
+            },
         ],
     ],
 
@@ -36,26 +42,26 @@ return [
         ],
         'connection' => [
             'orm_default' => [
-                'driver_class' => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+                'driver_class' => Driver::class,
                 'pdo' => PDO::class,
             ],
         ],
         'driver' => [
             'orm_default' => [
-                'class' => Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain::class,
+                'class' => MappingDriverChain::class,
                 'drivers' => [
                     'Blog\Domain\Model' => 'entities',
                 ],
             ],
             'entities' => [
-                'class' => Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
+                'class' => AnnotationDriver::class,
                 'cache' => 'filesystem',
                 'paths' => ['src/Domain/Model'],
             ],
         ],
         'cache' => [
             'filesystem' => [
-                'class' => Doctrine\Common\Cache\FilesystemCache::class,
+                'class' => FilesystemCache::class,
                 'directory' => 'storage/cache/doctrine',
             ],
         ],
@@ -72,7 +78,7 @@ return [
         ],
 
         'fixtures' => [
-            'path' => 'src/Infrastructure/Persistence/Doctrine/Fixture'
-        ]
+            'path' => 'src/Infrastructure/Persistence/Doctrine/Fixture',
+        ],
     ],
 ];

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain\Model;
 
@@ -8,6 +9,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * Class Identity
+ *
  * @package Blog\Domain\Model
  *
  * @ORM\MappedSuperclass()
@@ -15,33 +17,40 @@ use Ramsey\Uuid\Uuid;
 abstract class Identity
 {
     /**
+     * @var string
+     *
      * @ORM\Id
+     *
      * @ORM\Column(type="guid")
      */
     protected $id;
 
-    /**
-     * Identity constructor.
-     * @param string $id
-     */
-    public function __construct(string $id = null)
+    public function __construct(?string $id = null)
     {
-        $this->id = $id ?? Uuid::uuid4()->toString();
+        try {
+            $this->id = $id ?? Uuid::uuid4()->toString();
+        } catch (\Exception $exception) {
+            throw new \RuntimeException(
+                $exception->getMessage(),
+                1,
+                $exception
+            );
+        }
     }
 
-    public function equals(Identity $identity)
+    public function equals(Identity $identity): bool
     {
         return $this->id === $identity->id;
-    }
-
-    public function __toString()
-    {
-        return $this->id;
     }
 
     /**
      * @return string
      */
+    public function __toString()
+    {
+        return $this->id;
+    }
+
     public function id(): string
     {
         return $this->id;

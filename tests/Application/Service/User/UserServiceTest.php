@@ -25,7 +25,7 @@ class UserServiceTest extends TestCase
     private $userRepository;
 
     /**
-     * @var User[]
+     * @var array
      */
     private $users;
 

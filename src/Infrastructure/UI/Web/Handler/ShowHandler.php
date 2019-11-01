@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Infrastructure\UI\Web\Handler;
 
@@ -8,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 
-class ShowHandler implements RequestHandlerInterface
+final class ShowHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

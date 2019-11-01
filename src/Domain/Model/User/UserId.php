@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain\Model\User;
 
@@ -9,6 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable()
  */
-class UserId extends Identity
+final class UserId extends Identity
 {
 }

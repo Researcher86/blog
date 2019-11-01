@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\Application\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,7 +11,7 @@ use Go\Lang\Annotation\Around;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-class DoctrineTransactionalAspect implements Aspect
+final class DoctrineTransactionalAspect implements Aspect
 {
     /**
      * @var LoggerInterface
@@ -20,13 +22,10 @@ class DoctrineTransactionalAspect implements Aspect
      */
     private $entityManager;
 
-    /**
-     * MonitorAspect constructor.
-     * @param LoggerInterface $logger
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(LoggerInterface $logger, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        LoggerInterface $logger,
+        EntityManagerInterface $entityManager
+    ) {
         $this->logger = $logger;
         $this->entityManager = $entityManager;
     }
@@ -34,11 +33,14 @@ class DoctrineTransactionalAspect implements Aspect
 
     /**
      * @param MethodInvocation $invocation Invocation
+     *
      * @Around("@execution(Blog\Infrastructure\Application\Transactional)")
-     * @return mixed
+     *
+     * @return object|null
+     *
      * @throws \Throwable
      */
-    public function aroundMethodExecution(MethodInvocation $invocation)
+    public function aroundMethodExecution(MethodInvocation $invocation): ?object
     {
         $this->entityManager->beginTransaction();
 
@@ -48,10 +50,15 @@ class DoctrineTransactionalAspect implements Aspect
             $this->entityManager->commit();
 
             return $return;
-        } catch (Throwable $e) {
+        } catch (Throwable $exception) {
             $this->entityManager->rollBack();
 
-            throw $e;
+            $this->logger->error(
+                $exception->getMessage(),
+                $exception->getTrace()
+            );
+
+            return null;
         }
     }
 }

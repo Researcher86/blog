@@ -13,7 +13,7 @@ return function (MiddlewarePipe $pipe) use ($container) {
     $pipeHelper($pipe, '*', ProfileMiddleware::class);
     $pipeHelper($pipe, '*', AuthorMiddleware::class);
 
-    if (!$container->get('config')['debug']) {
+    if (! $container->get('config')['debug']) {
         $pipeHelper($pipe, '*', ErrorMiddleware::class);
     }
 

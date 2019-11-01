@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain\Model\Post;
 
@@ -9,6 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable()
  */
-class PostId extends Identity
+final class PostId extends Identity
 {
 }

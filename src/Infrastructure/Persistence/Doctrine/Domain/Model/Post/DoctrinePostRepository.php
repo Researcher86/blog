@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Infrastructure\Persistence\Doctrine\Domain\Model\Post;
 
@@ -10,29 +11,26 @@ use Blog\Domain\Model\User\UserId;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrinePostRepository implements PostRepository
+final class DoctrinePostRepository implements PostRepository
 {
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
     /**
      * @var ObjectRepository
      */
     private $repository;
 
-
-    /**
-     * DoctrineUserRepository constructor.
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->em = $em;
-        $this->repository = $this->em->getRepository(Post::class);
+        $this->entityManager = $entityManager;
+        $this->repository = $this->entityManager->getRepository(Post::class);
     }
 
-
+    /**
+     * @return Post[]
+     */
     public function getAll(): array
     {
         /** @var Post[] $posts */
@@ -45,6 +43,9 @@ class DoctrinePostRepository implements PostRepository
         return new PostId();
     }
 
+    /**
+     * @return Post[]
+     */
     public function findByUser(UserId $userId): array
     {
         /** @var Post[] $posts */

@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain\Model\Post;
 
@@ -12,20 +13,12 @@ interface PostRepository
      */
     public function getAll(): array;
 
-    /**
-     * @return PostId
-     */
     public function nextIdentity(): PostId;
 
     /**
-     * @param UserId $userId
      * @return Post[]
      */
     public function findByUser(UserId $userId): array;
 
-    /**
-     * @param PostId $param
-     * @return null|Post
-     */
     public function findById(PostId $param): ?Post;
 }

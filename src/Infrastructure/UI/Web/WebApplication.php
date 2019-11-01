@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\UI\Web;
 
 use Aura\Router\Matcher;
@@ -9,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 use Zend\Stratigility\MiddlewarePipeInterface;
 
-class WebApplication
+final class WebApplication
 {
     /**
      * @var MiddlewarePipeInterface
@@ -32,15 +34,6 @@ class WebApplication
      */
     private $emitter;
 
-
-    /**
-     * WebApplication constructor.
-     * @param MiddlewarePipeInterface $middlewarePipe
-     * @param Matcher $matcher
-     * @param RequestHandlerInterface $defaultHandler
-     * @param EmitterInterface $emitter
-     * @param ContainerInterface $container
-     */
     public function __construct(
         MiddlewarePipeInterface $middlewarePipe,
         Matcher $matcher,
@@ -55,7 +48,7 @@ class WebApplication
         $this->container = $container;
     }
 
-    public function run(ServerRequestInterface $request)
+    public function run(ServerRequestInterface $request): void
     {
         $matcher = $this->matcher;
 

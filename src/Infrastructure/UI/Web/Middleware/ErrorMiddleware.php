@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Infrastructure\UI\Web\Middleware;
 
@@ -11,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Log\LoggerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 
-class ErrorMiddleware implements MiddlewareInterface
+final class ErrorMiddleware implements MiddlewareInterface
 {
     /**
      * @var TemplateRenderInterface
@@ -22,29 +23,46 @@ class ErrorMiddleware implements MiddlewareInterface
      */
     private $logger;
 
-    /**
-     * Error404Middleware constructor.
-     * @param TemplateRenderInterface $templateRender
-     * @param LoggerInterface $logger
-     */
-    public function __construct(TemplateRenderInterface $templateRender, LoggerInterface $logger)
-    {
+    public function __construct(
+        TemplateRenderInterface $templateRender,
+        LoggerInterface $logger
+    ) {
         $this->templateRender = $templateRender;
         $this->logger = $logger;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface {
         try {
             return $handler->handle($request);
-        } catch (\Throwable $e) {
-            $this->logger->error($e->getMessage(), $e->getTrace());
-            try {
-                return new HtmlResponse($this->templateRender->render('error', ['error' => $e]), 500);
-            } catch (\Throwable $e) {
-                $this->logger->error($e->getMessage(), $e->getTrace());
-                return new HtmlResponse('<h1>500 - Server Error</h1>', 500);
-            }
+        } catch (\Throwable $exception) {
+            $this->logger->error(
+                $exception->getMessage(),
+                $exception->getTrace()
+            );
+            return $this->renderErrorPage($exception);
+        }
+    }
+
+    private function renderErrorPage(\Throwable $exception): HtmlResponse
+    {
+        try {
+            return new HtmlResponse(
+                $this->templateRender->render(
+                    'error',
+                    ['error' => $exception]
+                ),
+                500
+            );
+        } catch (\Throwable $exception) {
+            $this->logger->error(
+                $exception->getMessage(),
+                $exception->getTrace()
+            );
+
+            return new HtmlResponse('<h1>500 - Server Error</h1>', 500);
         }
     }
 }

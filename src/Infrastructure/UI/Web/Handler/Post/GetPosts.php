@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Infrastructure\UI\Web\Handler\Post;
 
@@ -9,17 +10,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class GetPosts implements RequestHandlerInterface
+final class GetPosts implements RequestHandlerInterface
 {
     /**
      * @var PostService
      */
     private $postService;
 
-    /**
-     * GetAllPostByUser constructor.
-     * @param PostService $postService
-     */
     public function __construct(PostService $postService)
     {
         $this->postService = $postService;

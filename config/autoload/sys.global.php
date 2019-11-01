@@ -1,8 +1,8 @@
 <?php
 
 use Blog\Infrastructure\Application\ApplicationAspectKernel;
-use Blog\Infrastructure\Application\Service\MonitorAspect;
 use Blog\Infrastructure\Application\Service\DoctrineTransactionalAspect;
+use Blog\Infrastructure\Application\Service\MonitorAspect;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
@@ -22,8 +22,8 @@ return [
             ApplicationAspectKernel::class => function (ContainerInterface $container, $requestedName) {
                 $cacheDir = 'storage/cache/aop';
 
-                if (!file_exists($cacheDir)) {
-                    mkdir($cacheDir, 0777, true);
+                if (! file_exists($cacheDir) && ! mkdir($cacheDir, 0777, true) && ! is_dir($cacheDir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $cacheDir));
                 }
                 // Initialize an application aspect container
                 $applicationAspectKernel = ApplicationAspectKernel::getInstance();
@@ -34,10 +34,9 @@ return [
                     'cacheDir'     => $cacheDir, // Cache directory
                     // Include paths restricts the directories where aspects should be applied, or empty for all source files
                     'includePaths' => [
-                        'src/Application'
-                    ]
+                        'src/Application',
+                    ],
                 ]);
-
 
                 return $applicationAspectKernel;
             },
@@ -51,7 +50,7 @@ return [
 
             'init' => function (ContainerInterface $container, $requestedName) {
                 $container->get(ApplicationAspectKernel::class);
-            }
+            },
         ],
 
         'aliases' => [

@@ -1,18 +1,12 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain;
 
 interface DomainEventSubscriber
 {
-    /**
-     * @param DomainEvent $aDomainEvent
-     */
-    public function handle($aDomainEvent);
+    public function handle(DomainEvent $aDomainEvent): void;
 
-    /**
-     * @param DomainEvent $aDomainEvent
-     * @return bool
-     */
-    public function isSubscribedTo($aDomainEvent);
+    public function isSubscribedTo(DomainEvent $aDomainEvent): bool;
 }

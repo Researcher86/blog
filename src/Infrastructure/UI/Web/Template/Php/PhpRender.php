@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Blog\Infrastructure\UI\Web\Template\Php;
 
 use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
@@ -12,11 +11,6 @@ class PhpRender implements TemplateRenderInterface
      */
     private $path;
 
-
-    /**
-     * PhpTemplateRender constructor.
-     * @param string $path
-     */
     public function __construct(string $path)
     {
         $this->path = $path;

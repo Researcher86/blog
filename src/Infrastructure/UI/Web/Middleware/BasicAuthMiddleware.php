@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\UI\Web\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
@@ -8,10 +10,13 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\EmptyResponse;
 
-class BasicAuthMiddleware implements MiddlewareInterface
+final class BasicAuthMiddleware implements MiddlewareInterface
 {
     public const ATTRIBUTE = '_user';
 
+    /**
+     * @var array
+     */
     private $users;
 
     public function __construct(array $users)
@@ -19,19 +24,38 @@ class BasicAuthMiddleware implements MiddlewareInterface
         $this->users = $users;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $username = $request->getServerParams()['PHP_AUTH_USER'] ?? null;
-        $password = $request->getServerParams()['PHP_AUTH_PW'] ?? null;
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface {
+        $username = $request->getServerParams()['PHP_AUTH_USER'] ?? '';
+        $password = $request->getServerParams()['PHP_AUTH_PW'] ?? '';
 
-        if (!empty($username) && !empty($password)) {
-            foreach ($this->users as $name => $pass) {
-                if ($username === $name && $password === $pass) {
-                    return $handler->handle($request->withAttribute(self::ATTRIBUTE, $name));
-                }
+        if ($username && $password) {
+            $name = $this->checkLoginAndPassword($username, $password);
+            if ($name) {
+                return $handler->handle(
+                    $request->withAttribute(self::ATTRIBUTE, $name)
+                );
             }
         }
 
-        return new EmptyResponse(401, ['WWW-Authenticate' => 'Basic realm=Restricted area']);
+        return new EmptyResponse(
+            401,
+            ['WWW-Authenticate' => 'Basic realm=Restricted area']
+        );
+    }
+
+    private function checkLoginAndPassword(
+        string $login,
+        string $password
+    ): ?string {
+        foreach ($this->users as $name => $pass) {
+            if ($login === $name && $password === $pass) {
+                return $name;
+            }
+        }
+
+        return null;
     }
 }

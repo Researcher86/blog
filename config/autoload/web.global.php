@@ -48,7 +48,10 @@ return [
                     if ($path === '*') {
                         $pipe->pipe($container->get($middleware));
                     } else {
-                        $pipe->pipe(new PathMiddlewareDecorator($path, $container->get($middleware)));
+                        $pipe->pipe(new PathMiddlewareDecorator(
+                            $path,
+                            $container->get($middleware)
+                        ));
                     }
                 };
             },
@@ -96,9 +99,9 @@ return [
 
     'twig' => [
         'views' => [
-            'src/Infrastructure/UI/Web/Template/Twig/Views'
+            'src/Infrastructure/UI/Web/Template/Twig/Views',
         ],
         'debug' => true,
         'cache' => 'storage/cache/twig',
-    ]
+    ],
 ];

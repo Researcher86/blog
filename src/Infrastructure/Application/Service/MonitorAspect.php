@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\Application\Service;
 
 use Go\Aop\Aspect;
@@ -7,7 +9,7 @@ use Go\Aop\Intercept\MethodInvocation;
 use Go\Lang\Annotation\Before;
 use Psr\Log\LoggerInterface;
 
-class MonitorAspect implements Aspect
+final class MonitorAspect implements Aspect
 {
     /**
      * @var LoggerInterface
@@ -16,6 +18,7 @@ class MonitorAspect implements Aspect
 
     /**
      * MonitorAspect constructor.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -28,9 +31,10 @@ class MonitorAspect implements Aspect
      * Method that will be called before real method
      *
      * @param MethodInvocation $invocation Invocation
-     * @Before("execution(public Blog\Application\**\**\*Service->execute(*))")
+     *
+     * @Before("execution(public Blog\Application\**\**\*Service->*(*))")
      */
-    public function beforeMethodExecution(MethodInvocation $invocation)
+    public function beforeMethodExecution(MethodInvocation $invocation): void
     {
         $obj = $invocation->getThis();
         $this->logger->debug(
@@ -41,7 +45,11 @@ class MonitorAspect implements Aspect
                 $invocation->getMethod()->getName(),
                 '()',
                 ' with arguments: ',
-                json_encode($invocation->getArguments())
+                json_encode(
+                    $invocation->getArguments(),
+                    JSON_THROW_ON_ERROR,
+                    512
+                ),
             ])
         );
     }

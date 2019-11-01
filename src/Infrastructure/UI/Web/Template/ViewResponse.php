@@ -24,14 +24,6 @@ class ViewResponse implements ResponseInterface
      */
     private $headers;
 
-
-    /**
-     * ViewResponse constructor.
-     * @param string $name
-     * @param array $data
-     * @param int $status
-     * @param array $headers
-     */
     public function __construct(string $name, array $data = [], int $status = 200, array $headers = [])
     {
         $this->name = $name;

@@ -1,9 +1,9 @@
 <?php
 
-use Blog\Domain\Model\User\UserRepository;
 use Blog\Domain\Model\Post\PostRepository;
-use Blog\Infrastructure\Persistence\Doctrine\Domain\Model\User\DoctrineUserRepository;
+use Blog\Domain\Model\User\UserRepository;
 use Blog\Infrastructure\Persistence\Doctrine\Domain\Model\Post\DoctrinePostRepository;
+use Blog\Infrastructure\Persistence\Doctrine\Domain\Model\User\DoctrineUserRepository;
 
 return [
     'dependencies' => [
@@ -17,5 +17,5 @@ return [
         ],
     ],
 
-    'debug' => true
+    'debug' => true,
 ];

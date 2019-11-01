@@ -1,6 +1,7 @@
 {
     "name": "researcher2286/blog",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-only",
+    "description": "Blog",
     "authors": [
         {
             "name": "Tanat",
@@ -9,6 +10,7 @@
     ],
     "require": {
         "ext-pdo": "*",
+        "ext-json": "*",
         "aura/router": "^3.1",
         "dasprid/container-interop-doctrine": "^1.1",
         "doctrine/data-fixtures": "^1.3",
@@ -81,14 +83,15 @@
         "migrate-diff": "doctrine-migrations diff --ansi",
 
         "load-fixture": "php db/init.php",
-        "phpinsights": "phpinsights --ansi",
+        "phpinsights": "phpinsights analyse --config-path=config/phpinsights.php --ansi -v --no-interaction --min-quality=85.7 --min-architecture=76.2 --min-style=97.8",
         "php-cs-fixer": [
             "php-cs-fixer fix src/",
             "php-cs-fixer fix tests/"
         ],
         "check": [
             "phpcs",
-            "phpstan analyse --ansi"
+            "phpstan analyse --ansi",
+            "@phpinsights"
         ]
     },
     "config": {

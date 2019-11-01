@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Blog\Domain\Model\User;
 
@@ -10,14 +11,7 @@ interface UserRepository
      */
     public function getAll(): array;
 
-    /**
-     * @return UserId
-     */
     public function nextIdentity(): UserId;
 
-    /**
-     * @param UserId $userId
-     * @return User
-     */
     public function findById(UserId $userId): ?User;
 }
