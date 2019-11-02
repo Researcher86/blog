@@ -53,7 +53,7 @@
         "///": "Параметре нужет для composer --ansi, делает красивый вывод сообщений infection",
         "test": [
             "phpunit --colors=always --testdox",
-            "infection -s --threads=8 --min-msi=100 --min-covered-msi=100 --ansi"
+            "infection -s --threads=4 --min-msi=100 --min-covered-msi=100 --ansi"
         ],
         "coverage": "phpunit --coverage-text",
         "orm-db-create": "doctrine orm:schema-tool:create --ansi",

@@ -31,13 +31,11 @@ final class BasicAuthMiddleware implements MiddlewareInterface
         $username = $request->getServerParams()['PHP_AUTH_USER'] ?? '';
         $password = $request->getServerParams()['PHP_AUTH_PW'] ?? '';
 
-        if ($username && $password) {
-            $name = $this->checkLoginAndPassword($username, $password);
-            if ($name) {
-                return $handler->handle(
-                    $request->withAttribute(self::ATTRIBUTE, $name)
-                );
-            }
+        $name = $this->checkLoginAndPassword($username, $password);
+        if ($name) {
+            return $handler->handle(
+                $request->withAttribute(self::ATTRIBUTE, $name)
+            );
         }
 
         return new EmptyResponse(
