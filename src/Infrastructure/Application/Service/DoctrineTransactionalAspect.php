@@ -36,11 +36,11 @@ final class DoctrineTransactionalAspect implements Aspect
      *
      * @Around("@execution(Blog\Infrastructure\Application\Transactional)")
      *
-     * @return object|null
+     * @return object|array
      *
-     * @throws \Throwable
+     * @throws \Exception
      */
-    public function aroundMethodExecution(MethodInvocation $invocation): ?object
+    public function aroundMethodExecution(MethodInvocation $invocation)
     {
         $this->entityManager->beginTransaction();
 
@@ -50,7 +50,7 @@ final class DoctrineTransactionalAspect implements Aspect
             $this->entityManager->commit();
 
             return $return;
-        } catch (Throwable $exception) {
+        } catch (\Exception $exception) {
             $this->entityManager->rollBack();
 
             $this->logger->error(
@@ -58,7 +58,7 @@ final class DoctrineTransactionalAspect implements Aspect
                 $exception->getTrace()
             );
 
-            return null;
+            throw $exception;
         }
     }
 }

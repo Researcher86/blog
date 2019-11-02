@@ -74,6 +74,7 @@ class PostServiceTest extends TestCase
     public function testAddComment()
     {
         $this->postRepository->method('findById')->willReturn($this->posts[0]);
+
         $this->postService->addComment(
             "Comment text",
             $this->posts[0]->getUserId()->id(),
@@ -88,6 +89,7 @@ class PostServiceTest extends TestCase
         $this->expectException(PostNotFound::class);
         $this->expectExceptionMessage("Post not found.");
         $this->postRepository->method('findById')->willReturn(null);
+
         $this->postService->addComment(
             "Comment text",
             $this->posts[0]->getUserId()->id(),
