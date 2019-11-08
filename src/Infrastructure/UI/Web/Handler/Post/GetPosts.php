@@ -25,6 +25,6 @@ final class GetPosts implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->postService->getAllPosts();
-        return new ViewResponse('posts', ['posts' => $posts]);
+        return new ViewResponse('posts/list', ['posts' => $posts]);
     }
 }

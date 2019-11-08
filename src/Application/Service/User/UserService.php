@@ -23,7 +23,7 @@ final class UserService
     /**
      * @Transactional()
      *
-     * @return User[]
+     * @return array<User>
      */
     public function getAllUsers(): array
     {

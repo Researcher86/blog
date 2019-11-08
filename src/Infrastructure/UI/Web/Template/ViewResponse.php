@@ -1,120 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\UI\Web\Template;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use Zend\Diactoros\Response;
 
-class ViewResponse implements ResponseInterface
+final class ViewResponse extends Response
 {
     /**
      * @var string
      */
     private $name;
     /**
-     * @var array
+     * @var array<string, string|int|float|bool|object|array>
      */
     private $data;
-    /**
-     * @var int
-     */
-    private $status;
-    /**
-     * @var array
-     */
-    private $headers;
 
-    public function __construct(string $name, array $data = [], int $status = 200, array $headers = [])
-    {
+    /**
+     * ViewResponse constructor.
+     *
+     * @param string $name View name
+     * @param array<string, string|int|float|bool|object|array> $data
+     *  Variables for view
+     * @param int $status Response status
+     * @param array<string, string> $headers Response headers
+     */
+    public function __construct(
+        string $name,
+        array $data = [],
+        int $status = 200,
+        array $headers = []
+    ) {
         $this->name = $name;
         $this->data = $data;
-        $this->status = $status;
-        $this->headers = $headers;
+
+        parent::__construct('php://memory', $status, $headers);
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return array
+     * @param string|null $key
+     *
+     * @return array<string|int|float|object|array> Variables for view
      */
-    public function getData(): array
+    public function getData(?string $key = null): array
     {
-        return $this->data;
-    }
-
-    public function getProtocolVersion()
-    {
-        // TODO: Implement getProtocolVersion() method.
-    }
-
-    public function withProtocolVersion($version)
-    {
-        // TODO: Implement withProtocolVersion() method.
-    }
-
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    public function hasHeader($name)
-    {
-        // TODO: Implement hasHeader() method.
-    }
-
-    public function getHeader($name)
-    {
-        // TODO: Implement getHeader() method.
-    }
-
-    public function getHeaderLine($name)
-    {
-        // TODO: Implement getHeaderLine() method.
-    }
-
-    public function withHeader($name, $value)
-    {
-        // TODO: Implement withHeader() method.
-    }
-
-    public function withAddedHeader($name, $value)
-    {
-        // TODO: Implement withAddedHeader() method.
-    }
-
-    public function withoutHeader($name)
-    {
-        // TODO: Implement withoutHeader() method.
-    }
-
-    public function getBody()
-    {
-        // TODO: Implement getBody() method.
-    }
-
-    public function withBody(StreamInterface $body)
-    {
-        // TODO: Implement withBody() method.
-    }
-
-    public function getStatusCode()
-    {
-        return $this->status;
-    }
-
-    public function withStatus($code, $reasonPhrase = '')
-    {
-        // TODO: Implement withStatus() method.
-    }
-
-    public function getReasonPhrase()
-    {
-        // TODO: Implement getReasonPhrase() method.
+        /** @var array<string|int|float|object|array> $result */
+        $result = $key ? $this->data[$key] : $this->data;
+        return $result;
     }
 }

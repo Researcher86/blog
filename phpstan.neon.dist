@@ -3,6 +3,8 @@ parameters:
     excludes_analyse:
       - src/Infrastructure/UI/Web/Template/Php/Views
       - src/Infrastructure/UI/Web/Template/Twig/Views
+      - tests/Infrastructure/UI/Web/Template/Php/Views
+      - tests/Infrastructure/UI/Web/Template/Twig/Views
     paths:
       - src
       - tests

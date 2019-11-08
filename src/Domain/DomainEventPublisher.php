@@ -7,7 +7,7 @@ namespace Blog\Domain;
 final class DomainEventPublisher
 {
     /**
-     * @var DomainEventSubscriber[]
+     * @var array<DomainEventSubscriber>
      */
     private $subscribers;
 
@@ -59,11 +59,11 @@ final class DomainEventPublisher
         unset($this->subscribers[$id]);
     }
 
-    public function publish(DomainEvent $aDomainEvent): void
+    public function publish(DomainEvent $domainEvent): void
     {
-        foreach ($this->subscribers as $aSubscriber) {
-            if ($aSubscriber->isSubscribedTo($aDomainEvent)) {
-                $aSubscriber->handle($aDomainEvent);
+        foreach ($this->subscribers as $subscriber) {
+            if ($subscriber->isSubscribedTo($domainEvent)) {
+                $subscriber->handle($domainEvent);
             }
         }
     }

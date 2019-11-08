@@ -14,7 +14,12 @@ return [
         'factories' => [
             Logger::class => function (ContainerInterface $container, $requestedName) {
                 return new Logger('blog', [
-                    new StreamHandler('storage/app.log', $container->get('config')['debug'] ? Logger::DEBUG : Logger::WARNING),
+                    new StreamHandler(
+                        'storage/app.log',
+                        $container->get('config')['debug']
+                            ? Logger::DEBUG
+                            : Logger::WARNING
+                    ),
 //                    new NativeMailerHandler('', '', '', Logger::ERROR)
                 ]);
             },
@@ -27,16 +32,21 @@ return [
                 }
                 // Initialize an application aspect container
                 $applicationAspectKernel = ApplicationAspectKernel::getInstance();
-                $applicationAspectKernel->setDiContainer($container);
                 $applicationAspectKernel->init([
                     'debug'        => true, // use 'false' for production mode
                     'appDir'       => 'src/', // Application root directory
                     'cacheDir'     => $cacheDir, // Cache directory
-                    // Include paths restricts the directories where aspects should be applied, or empty for all source files
+                    // Include paths restricts the directories where
+                    // aspects should be applied, or empty for all source files
                     'includePaths' => [
                         'src/Application',
                     ],
                 ]);
+
+                $aspectContainer = $applicationAspectKernel->getContainer();
+                foreach ($container->get('aspects') as $aspect) {
+                    $aspectContainer->registerAspect($aspect);
+                }
 
                 return $applicationAspectKernel;
             },

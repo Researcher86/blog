@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Domain\Model\User;
 
 use Blog\Domain\Model\User\User;
@@ -10,6 +12,9 @@ class UserTest extends TestCase
 {
     public function testCreate()
     {
-        self::assertNotNull(new User(new UserId(), 'John', 45));
+        $user = new User($userId = new UserId(), $name = 'John', $age = 45);
+        self::assertTrue($user->getId()->equals($userId));
+        self::assertEquals($user->getName(), $name);
+        self::assertEquals($user->getAge(), $age);
     }
 }

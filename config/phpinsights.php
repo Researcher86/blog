@@ -10,7 +10,7 @@ return [
         'db',
         'vendor',
         'src/Infrastructure/Persistence/Doctrine/Migration',
-        'src/Infrastructure/UI/Web/Template',
+        'src/Infrastructure/UI/Web/Template/Php',
     ],
     'add' => [
         //  ExampleMetric::class => [

@@ -34,7 +34,7 @@ final class MonitorAspect implements Aspect
      *
      * @Before("execution(public Blog\Application\**\**\*Service->*(*))")
      */
-    public function beforeMethodExecution(MethodInvocation $invocation): void
+    public function monitor(MethodInvocation $invocation): void
     {
         $obj = $invocation->getThis();
         $this->logger->debug(

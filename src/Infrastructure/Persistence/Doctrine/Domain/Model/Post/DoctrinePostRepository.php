@@ -29,11 +29,11 @@ final class DoctrinePostRepository implements PostRepository
     }
 
     /**
-     * @return Post[]
+     * @return array<Post>
      */
     public function getAll(): array
     {
-        /** @var Post[] $posts */
+        /** @var array<Post> $posts */
         $posts = $this->repository->findAll();
         return $posts;
     }
@@ -44,11 +44,13 @@ final class DoctrinePostRepository implements PostRepository
     }
 
     /**
-     * @return Post[]
+     * @param UserId $userId
+     *
+     * @return array<Post>
      */
     public function findByUser(UserId $userId): array
     {
-        /** @var Post[] $posts */
+        /** @var array<Post> $posts */
         $posts = $this->repository->findBy(['userId.id' => $userId]);
         return $posts;
     }

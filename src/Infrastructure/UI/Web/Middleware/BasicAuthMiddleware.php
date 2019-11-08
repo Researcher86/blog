@@ -15,10 +15,15 @@ final class BasicAuthMiddleware implements MiddlewareInterface
     public const ATTRIBUTE = '_user';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     private $users;
 
+    /**
+     * BasicAuthMiddleware constructor.
+     *
+     * @param array<string, string> $users List of authorized users
+     */
     public function __construct(array $users)
     {
         $this->users = $users;

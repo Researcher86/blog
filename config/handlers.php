@@ -1,7 +1,6 @@
 <?php
 
 use Aura\Router\Map;
-use Blog\Infrastructure\UI\Web\Handler\AboutHandler;
 use Blog\Infrastructure\UI\Web\Handler\IndexHandler;
 use Blog\Infrastructure\UI\Web\Handler\Post\GetPosts;
 use Blog\Infrastructure\UI\Web\Handler\Post\GetPostsByUser;
@@ -24,6 +23,5 @@ return function (Map $map) {
         GetPostsByUser::class
     )->tokens(['userId' => '.+']);
     $map->get('all-posts', '/posts', GetPosts::class);
-    $map->get('about', '/about', AboutHandler::class);
     $map->get('profile', '/profile', ProfileHandler::class);
 };

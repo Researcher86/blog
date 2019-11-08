@@ -55,4 +55,9 @@ final class User
     {
         return $this->age;
     }
+
+    public function equals(User $user): bool
+    {
+        return $this->id->equals($user->id);
+    }
 }

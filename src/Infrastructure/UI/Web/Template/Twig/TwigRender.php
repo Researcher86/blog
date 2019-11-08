@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\UI\Web\Template\Twig;
 
-use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
+use Blog\Infrastructure\UI\Web\Template\TemplateRender;
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
 
-class TwigRender implements TemplateRenderInterface
+final class TwigRender implements TemplateRender
 {
     /**
      * @var Environment
@@ -18,12 +19,11 @@ class TwigRender implements TemplateRenderInterface
         $this->environment = $environment;
     }
 
-    public function render(string $path, array $data): string
+    /**
+     * {@inheritDoc}
+     */
+    public function render(string $viewName, array $data): string
     {
-        if ($this->environment->isDebug()) {
-            $this->environment->addExtension(new DebugExtension());
-        }
-
-        return $this->environment->render($path . '.twig', $data);
+        return $this->environment->render($viewName . '.twig', $data);
     }
 }

@@ -20,10 +20,15 @@ class DoctrinePostRepositoryTest extends TestCase
         $this->repository = $container->get(DoctrinePostRepository::class);
     }
 
-
     public function testFindByUser()
     {
-        self::assertNotEmpty($this->repository->findByUser(new UserId('11111111-1111-1111-1111-111111111111')));
+        $userId = new UserId('11111111-1111-1111-1111-111111111111');
+        $posts = $this->repository->findByUser($userId);
+        self::assertNotEmpty($posts);
+
+        foreach ($posts as $post) {
+            self::assertTrue($post->getUserId()->equals($userId));
+        }
     }
 
     public function testGetAll()
