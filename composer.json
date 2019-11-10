@@ -55,7 +55,6 @@
             "phpunit --colors=always --testdox",
             "infection -s --threads=4 --min-msi=100 --min-covered-msi=100 --ansi"
         ],
-        "coverage": "phpunit --coverage-text",
         "orm-db-create": "doctrine orm:schema-tool:create --ansi",
         "orm-db-drop": "doctrine orm:schema-tool:drop --force --ansi",
         "orm-db-update": "doctrine orm:schema-tool:update --force --ansi",
