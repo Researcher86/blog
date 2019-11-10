@@ -26,7 +26,6 @@ final class MonitorAspect implements Aspect
         $this->logger = $logger;
     }
 
-
     /**
      * Method that will be called before real method
      *
@@ -34,7 +33,7 @@ final class MonitorAspect implements Aspect
      *
      * @Before("execution(public Blog\Application\**\**\*Service->*(*))")
      */
-    public function beforeMethodExecution(MethodInvocation $invocation): void
+    public function monitor(MethodInvocation $invocation): void
     {
         $obj = $invocation->getThis();
         $this->logger->debug(
@@ -48,7 +47,6 @@ final class MonitorAspect implements Aspect
                 json_encode(
                     $invocation->getArguments(),
                     JSON_THROW_ON_ERROR,
-                    512
                 ),
             ])
         );

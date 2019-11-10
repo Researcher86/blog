@@ -28,6 +28,8 @@
             <exclude>
                 <directory>src/Infrastructure/UI/Web/Template/Php/Views</directory>
                 <directory>src/Infrastructure/UI/Web/Template/Twig/Views</directory>
+                <directory>src/Infrastructure/Persistence/Doctrine/Fixture</directory>
+                <directory>src/Infrastructure/Persistence/Doctrine/Migration</directory>
             </exclude>
         </whitelist>
     </filter>

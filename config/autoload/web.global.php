@@ -4,12 +4,13 @@ use Aura\Router\Matcher;
 use Aura\Router\RouterContainer;
 use Blog\Infrastructure\UI\Web\Handler\NotFoundHandler;
 use Blog\Infrastructure\UI\Web\Middleware\BasicAuthMiddleware;
-use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
+use Blog\Infrastructure\UI\Web\Template\TemplateRender;
 use Blog\Infrastructure\UI\Web\Template\Twig\TwigRender;
 use Blog\Infrastructure\UI\Web\WebApplication;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
@@ -30,10 +31,19 @@ return [
             },
 
             Environment::class => function (ContainerInterface $container, $requestedName) {
-                return new Environment(
+                $options = $container->get('config')['twig'];
+                $options['debug'] = $container->get('config')['debug'];
+
+                $environment = new Environment(
                     $container->get(LoaderInterface::class),
-                    $container->get('config')['twig']
+                    $options
                 );
+
+                if ($environment->isDebug()) {
+                    $environment->addExtension(new DebugExtension());
+                }
+
+                return $environment;
             },
 
             'handlers' => function (ContainerInterface $container, $requestedName) {
@@ -81,7 +91,6 @@ return [
                     $container->get(MiddlewarePipeInterface::class),
                     $container->get(Matcher::class),
                     $container->get(RequestHandlerInterface::class),
-                    $container->get(EmitterInterface::class),
                     $container
                 );
             },
@@ -92,7 +101,7 @@ return [
 
             EmitterInterface::class => SapiEmitter::class,
             MiddlewarePipeInterface::class => MiddlewarePipe::class,
-            TemplateRenderInterface::class => TwigRender::class,
+            TemplateRender::class => TwigRender::class,
             LoaderInterface::class => FilesystemLoader::class,
         ],
     ],
@@ -101,7 +110,6 @@ return [
         'views' => [
             'src/Infrastructure/UI/Web/Template/Twig/Views',
         ],
-        'debug' => true,
         'cache' => 'storage/cache/twig',
     ],
 ];

@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Infrastructure\Persistence\Doctrine\Domain\Model\User;
+namespace Tests\Domain\Model\User;
 
 use Blog\Domain\Model\User\UserId;
 use Blog\Domain\Model\User\UserRepository;
-use Blog\Infrastructure\Persistence\Doctrine\Domain\Model\User\DoctrineUserRepository;
 use PHPUnit\Framework\TestCase;
 
-class DoctrineUserRepositoryTest extends TestCase
+class UserRepositoryTest extends TestCase
 {
     /**
      * @var UserRepository
@@ -17,13 +16,26 @@ class DoctrineUserRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $container = include 'config/container.php';
-        $this->repository = $container->get(DoctrineUserRepository::class);
+        $this->repository = $container->get(UserRepository::class);
     }
-
 
     public function testFindById()
     {
-        self::assertNotEmpty($this->repository->findById(new UserId('11111111-1111-1111-1111-111111111111')));
+        $userId = new UserId('11111111-1111-1111-1111-111111111111');
+
+        $user = $this->repository->findById($userId);
+
+        self::assertNotNull($user);
+        self::assertTrue($user ? $user->getId()->equals($userId) : false);
+    }
+
+    public function testFindByIdReturnNull()
+    {
+        $userId = new UserId();
+
+        $user = $this->repository->findById($userId);
+
+        self::assertNull($user);
     }
 
     public function testGetAll()

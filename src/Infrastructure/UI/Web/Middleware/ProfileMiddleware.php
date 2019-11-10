@@ -19,9 +19,9 @@ final class ProfileMiddleware implements MiddlewareInterface
 
         $response = $handler->handle($request);
 
-        return $response->withHeader(
-            'X-Profiler-Time',
-            (string) (microtime(true) - $start)
-        );
+        $end = (string) (microtime(true) - $start);
+        assert(is_string($end));
+
+        return $response->withHeader('X-Profiler-Time', $end);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Blog\Infrastructure\UI\Web\Template\Php;
 
-use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
+use Blog\Infrastructure\UI\Web\Template\TemplateRender;
 
-class PhpRender implements TemplateRenderInterface
+final class PhpRender implements TemplateRender
 {
     /**
      * @var string
@@ -16,15 +18,21 @@ class PhpRender implements TemplateRenderInterface
         $this->path = $path;
     }
 
-    public function render(string $path, array $data): string
+    /**
+     * {@inheritDoc}
+     */
+    public function render(string $viewName, array $data): string
     {
-        ob_start();
-        extract($data);
-        include sprintf("%s/%s.php", $this->path, $path);
-        $result = ob_get_clean();
+        $result = null;
 
-        if (!$result) {
-            throw new \RuntimeException("Error render view.");
+        if (ob_start()) {
+            extract($data);
+            @include sprintf('%s/%s.php', $this->path, $viewName);
+            $result = ob_get_clean();
+        }
+
+        if (! $result) {
+            throw new \RuntimeException('Error render view.');
         }
 
         return $result;

@@ -1,4 +1,4 @@
 <?php
 
-include 'config/container.php';
+//include 'config/container.php';
 //include 'vendor/autoload.php';

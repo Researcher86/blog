@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Blog\Infrastructure\UI\Web\Middleware;
 
-use Blog\Infrastructure\UI\Web\Template\TemplateRenderInterface;
+use Blog\Infrastructure\UI\Web\Template\TemplateRender;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,7 +15,7 @@ use Zend\Diactoros\Response\HtmlResponse;
 final class ErrorMiddleware implements MiddlewareInterface
 {
     /**
-     * @var TemplateRenderInterface
+     * @var TemplateRender
      */
     private $templateRender;
     /**
@@ -24,7 +24,7 @@ final class ErrorMiddleware implements MiddlewareInterface
     private $logger;
 
     public function __construct(
-        TemplateRenderInterface $templateRender,
+        TemplateRender $templateRender,
         LoggerInterface $logger
     ) {
         $this->templateRender = $templateRender;

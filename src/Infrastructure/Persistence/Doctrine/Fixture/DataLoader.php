@@ -43,7 +43,13 @@ final class DataLoader extends AbstractFixture
         UserId $userId
     ): void {
         for ($i = 0; $i < 10; $i++) {
-            $post = new Post(new PostId(), $faker->name, $userId);
+            if ($i === 0) {
+                $postId = new PostId('11111111-1111-1111-1111-111111111111');
+            } else {
+                $postId = new PostId();
+            }
+
+            $post = new Post($postId, $faker->name, $userId);
             $post->addComment($faker->text, $userId);
             $post->addComment($faker->text, $userId);
             $post->addComment($faker->text, $userId);

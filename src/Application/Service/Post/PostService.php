@@ -26,7 +26,7 @@ final class PostService
     /**
      * @param string $userId
      *
-     * @return Post[]
+     * @return array<Post>
      */
     public function findPostsByUser(string $userId): array
     {
@@ -34,7 +34,7 @@ final class PostService
     }
 
     /**
-     * @return Post[]
+     * @return array<Post>
      */
     public function getAllPosts(): array
     {
@@ -42,11 +42,13 @@ final class PostService
     }
 
     /**
+     * Add comment for post.
+     *
      * @Transactional()
      *
-     * @param string $text
-     * @param string $userId
-     * @param string $postId
+     * @param string $text Message
+     * @param string $userId User identity
+     * @param string $postId Post identity
      */
     public function addComment(
         string $text,

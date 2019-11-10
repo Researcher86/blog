@@ -6,6 +6,7 @@ namespace Blog\Domain\Model\Post;
 
 use Blog\Domain\Model\User\UserId;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * @ORM\Entity()
@@ -36,7 +37,7 @@ final class Post
     private $userId;
 
     /**
-     * @var Comment[]
+     * @var array<Comment>
      *
      * @ORM\OneToMany(
      *     targetEntity="Comment",
@@ -44,7 +45,7 @@ final class Post
      *     cascade={"remove", "persist"}
      * )
      */
-    private $comments;
+    private $comments = [];
 
     public function __construct(PostId $id, string $name, UserId $userId)
     {
@@ -69,7 +70,7 @@ final class Post
     }
 
     /**
-     * @return Comment[]
+     * @return array<Comment>
      */
     public function getComments(): array
     {
@@ -78,6 +79,16 @@ final class Post
 
     public function addComment(string $text, UserId $userId): void
     {
-        $this->comments[] = new Comment(new CommentId(), $text, $userId, $this);
+        $msg = trim($text);
+        if ($msg === '') {
+            throw new InvalidArgumentException('Text is required.');
+        }
+
+        $this->comments[] = new Comment(new CommentId(), $msg, $userId, $this);
+    }
+
+    public function equals(Post $other): bool
+    {
+        return $this->id->equals($other->id);
     }
 }

@@ -28,11 +28,11 @@ final class DoctrineUserRepository implements UserRepository
     }
 
     /**
-     * @return User[]
+     * @return array<User>
      */
     public function getAll(): array
     {
-        /** @var User[] $users */
+        /** @var array<User> $users */
         $users = $this->repository->findAll();
         return $users;
     }
