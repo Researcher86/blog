@@ -4,13 +4,17 @@
       "src"
     ],
     "excludes": [
-      "db/*",
-      "storage/*"
+      "Infrastructure/Persistence/Doctrine/Migration",
+      "Infrastructure/Persistence/Doctrine/Fixture",
+      "Infrastructure/UI/Web/Template/Php/Views",
+      "Infrastructure/UI/Web/Template/Twig/Views"
     ]
   },
   "timeout": 10,
-  "tmpDir": "storage/cache",
+  "tmpDir": "storage/infection",
   "logs": {
+    "text": "storage/infection/infection.log",
+    "summary": "storage/infection/summary.log",
     "badge": {
       "branch": "master"
     }

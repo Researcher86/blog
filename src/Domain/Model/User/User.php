@@ -56,8 +56,8 @@ final class User
         return $this->age;
     }
 
-    public function equals(User $user): bool
+    public function equals(User $other): bool
     {
-        return $this->id->equals($user->id);
+        return $this->id->equals($other->id);
     }
 }

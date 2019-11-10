@@ -73,4 +73,9 @@ final class Comment
     {
         return $this->post;
     }
+
+    public function equals(Comment $other): bool
+    {
+        return $this->id->equals($other->id);
+    }
 }

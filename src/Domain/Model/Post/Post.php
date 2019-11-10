@@ -6,6 +6,7 @@ namespace Blog\Domain\Model\Post;
 
 use Blog\Domain\Model\User\UserId;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 
 /**
  * @ORM\Entity()
@@ -80,14 +81,14 @@ final class Post
     {
         $msg = trim($text);
         if ($msg === '') {
-            throw new \InvalidArgumentException('Text is required.');
+            throw new InvalidArgumentException('Text is required.');
         }
 
         $this->comments[] = new Comment(new CommentId(), $msg, $userId, $this);
     }
 
-    public function equals(Post $post): bool
+    public function equals(Post $other): bool
     {
-        return $this->id->equals($post->id);
+        return $this->id->equals($other->id);
     }
 }

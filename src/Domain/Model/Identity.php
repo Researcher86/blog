@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Blog\Domain\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use DomainException;
+use Exception;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -29,8 +31,8 @@ abstract class Identity
     {
         try {
             $this->id = $id ?? Uuid::uuid4()->toString();
-        } catch (\Exception $exception) {
-            throw new \DomainException(
+        } catch (Exception $exception) {
+            throw new DomainException(
                 $exception->getMessage(),
                 1,
                 $exception
@@ -38,9 +40,9 @@ abstract class Identity
         }
     }
 
-    public function equals(Identity $identity): bool
+    public function equals(Identity $other): bool
     {
-        return $this->id() === $identity->id();
+        return $this->id() === $other->id();
     }
 
     public function __toString(): string

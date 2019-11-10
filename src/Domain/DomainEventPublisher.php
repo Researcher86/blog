@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Blog\Domain;
 
+use BadMethodCallException;
+
 final class DomainEventPublisher
 {
     /**
@@ -37,15 +39,14 @@ final class DomainEventPublisher
 
     public function __clone()
     {
-        throw new \BadMethodCallException('Clone is not supported');
+        throw new BadMethodCallException('Clone is not supported.');
     }
 
     public function subscribe(DomainEventSubscriber $subscriber): int
     {
+        $this->subscribers[$this->id] = $subscriber;
         $id = $this->id;
-        $this->subscribers[$id] = $subscriber;
         $this->id++;
-
         return $id;
     }
 

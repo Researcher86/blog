@@ -26,7 +26,6 @@ final class MonitorAspect implements Aspect
         $this->logger = $logger;
     }
 
-
     /**
      * Method that will be called before real method
      *
@@ -48,7 +47,6 @@ final class MonitorAspect implements Aspect
                 json_encode(
                     $invocation->getArguments(),
                     JSON_THROW_ON_ERROR,
-                    512
                 ),
             ])
         );

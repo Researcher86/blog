@@ -7,6 +7,7 @@ namespace Tests\Domain\Model\Post;
 use Blog\Domain\Model\Post\Post;
 use Blog\Domain\Model\Post\PostId;
 use Blog\Domain\Model\User\UserId;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class PostTest extends TestCase
@@ -19,9 +20,9 @@ class PostTest extends TestCase
         self::assertEquals($post->getName(), $name);
     }
 
-    public function testAddCommentExpectInvalidArgument()
+    public function testAddCommentExpectInvalidArgumentException()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text is required.');
 
         (new Post(new PostId(), 'Test', new UserId()))->addComment(
